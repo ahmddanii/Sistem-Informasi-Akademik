@@ -1,0 +1,69 @@
+body {
+  font-family: "Nunito";
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  z-index: 1000;
+}
+
+.sidebar {
+  color: #475569;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 280px;
+  height: 85vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+  z-index: 1100;
+}
+
+.sidebar-hidden {
+  transform: translateX(-200%);
+}
+
+.nav-link.active {
+  background-color: #6c757d;
+}
+
+.profile-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.toggle-btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.toggle-btn span {
+  width: 25px;
+  height: 3px;
+  background-color: rgba(85, 85, 85, 0.9);
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.animate .bar1 {
+  transform: translate(0, 8px) rotate(45deg);
+}
+
+.animate .bar2 {
+  transform: scale(0);
+}
+
+.animate .bar3 {
+  transform: translate(0, -8px) rotate(-45deg);
+}
