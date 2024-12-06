@@ -9,23 +9,6 @@ if (!isset($_SESSION["login"])) {
 // koneksi ke DBMS
 require 'functions.php';
 
-// cek tombol submit sudah ditekan atau belum
-if (isset($_POST["submit"])) {
-
-
-    // cek data berhasil ditambahkan atau gagal
-    if (tambah($_POST) > 0) {
-        echo "<script>
-         alert ('data berhasil ditambahkan!');
-         document.location.href = 'index.php';
-      </script>";
-    } else {
-        echo "<script>
-         alert ('data gagal ditambahkan!');
-         document.location.href = 'index.php';
-      </script>";
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +26,9 @@ if (isset($_POST["submit"])) {
 
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -133,7 +119,7 @@ if (isset($_POST["submit"])) {
                         <select class="form-select" name="prodi" aria-label="Default select example">
                             <option selected>Program Studi</option>
                             <option value="Sistem Informasi">Sistem Informasi</option>
-                            <option value="Teknik Informatika">Teknik Informatik</option>
+                            <option value="Teknik Informatika">Teknik Informatika</option>
                             <option value="Teknik Kimia">Teknik Kimia</option>
                             <option value="Teknik Geologi">Teknik Geologi</option>
                             <option value="Teknik Pertambangan">Teknik Pertambangan</option>
@@ -146,6 +132,33 @@ if (isset($_POST["submit"])) {
                     </div>
 
                     <button type="submit" name="submit" class="btn btn-primary w-100 mx-auto">Submit</button>
+                    <?php
+                    // cek tombol submit sudah ditekan atau belum
+                    if (isset($_POST["submit"])) {
+
+                        // cek data berhasil ditambahkan atau gagal
+                        if (tambah($_POST) > 0) {
+                            echo "<script>
+                            Swal.fire({
+                                title: 'Data Berhasil di Tambahkan',
+                                icon: 'success',
+                                didClose: () => {
+                                    document.location.href = 'index.php';
+                                }
+                            });
+                            </script>";
+                        } else {
+                            echo "<script>
+                            Swal.fire({
+                                title: 'Data Gagal di Tambahkan',
+                                icon: 'error',
+                                didClose: () => {
+                                    document.location.href = 'index.php';
+                                }
+                            });
+                            </script>";
+                        }
+                    } ?>
                 </form>
         </div>
     </div>

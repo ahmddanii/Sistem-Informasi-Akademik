@@ -59,7 +59,7 @@ if (isset($_POST["search"])) {
     </a>
     <div class="dropdown">
       <a href="#" class="d-flex text-body align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="assets/img/download.jpg" alt="Profile" width="32" height="32" class="rounded-circle me-2">
+        <img src="assets/img/<?= $_SESSION["profile-picture"] ?>" alt="Profile" width="32" height="32" class="rounded-circle me-2">
         <strong><?= $_SESSION["username"] ?></strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow">

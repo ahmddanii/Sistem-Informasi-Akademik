@@ -104,37 +104,89 @@ if (isset($_POST["submit"])) {
         </ul>
         <hr>
     </div>
+    <div class="container my-4">
+        <div class="main w-50 mx-auto rounded-2 shadow p-5 m-3 ">
+            <h3 class="text-dark">Edit Data Mahasiswa</h1>
+                <form class="row" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Nomor Induk Mahasiswa</label>
+                        <input type="text" class="form-control" name="nim" id="exampleInputEmail1" placeholder="<?= $student["nim"] ?>" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Nama</label>
+                        <input type="text" class="form-control" name="nama" id="exampleInputEmail1" placeholder="<?= $student["nama"] ?>" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email</label>
+                        <input type="text" class="form-control" name="email" id="exampleInputEmail1" placeholder="<?= $student["email"] ?>"
+                            aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="mb-3 col-4">
+                        <label for="exampleInputEmail1" class="form-label">Tempat</label>
+                        <input type="text" class="form-control" name="tempat" id="exampleInputEmail1" placeholder="<?= $student["tempat"] ?>" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="mb-3 col-4">
+                        <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
+                        <input type="text" class="form-control" name="tanggal-lahir" id="exampleInputEmail1" placeholder="<?= $student["tanggal-lahir"] ?>" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="mb-3 col-4">
+                        <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
+                        <select class="form-select" name="jenis-kelamin" aria-label="Default select example">
+                            <option selected><?= $student["jenis-kelamin"] ?></option>
+                            <option value="Laki-laki">Laki-Laki</option>
+                            <option value="Perempuan">Perempuan</option>
 
-    <h1 class="text-dark m-4 text-xl-center ">Edit Data Siswa</h1>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Prodi</label>
+                        <select class="form-select" name="prodi" aria-label="Default select example">
+                            <option selected><?= $student["prodi"] ?></option>
+                            <option value="Sistem Informasi">Sistem Informasi</option>
+                            <option value="Teknik Informatika">Teknik Informatika</option>
+                            <option value="Teknik Kimia">Teknik Kimia</option>
+                            <option value="Teknik Geologi">Teknik Geologi</option>
+                            <option value="Teknik Pertambangan">Teknik Pertambangan</option>
+                            <option value="Teknik Mesin">Teknik Mesin</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <img src="assets/img/<?= $student["gambar"] ?>" alt="Gambar siswa" class="img-fluid
+                        ">
+                        <label for="exampleInputEmail1" class="form-label">Gambar</label>
+                        <input type="file" class="form-control" name="gambar" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
 
-    <div class="main w-50 mx-auto rounded-2 shadow p-5 m-3 ">
-        <form action="" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="id" id="" value="<?= $student["id"]; ?>">
-            <input type="hidden" name="gambarLama" id="" value="<?= $student["gambar"]; ?>">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Nomor Induk Siswa</label>
-                <input type="text" class="form-control" name="nim" id="exampleInputEmail1" aria-describedby="emailHelp" required value="<?= $student["nim"]; ?>">
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Nama</label>
-                <input type="text" class="form-control" name="nama" id="exampleInputEmail1" aria-describedby="emailHelp" required value="<?= $student["nama"]; ?>">
-            </div>
-            <div class=" mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email</label>
-                <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" required value="<?= $student["email"]; ?>">
-            </div>
-            <div class=" mb-3">
-                <label for="exampleInputEmail1" class="form-label">Program Studi</label>
-                <input type="text" class="form-control" name="prodi" id="exampleInputEmail1" aria-describedby="emailHelp" required value="<?= $student["prodi"]; ?>">
-            </div>
-            <div class="mb-3 d-flex flex-column ">
-                <label for="exampleInputEmail1" class="form-label">Gambar</label>
-                <img class="mx-auto m-3 rounded-2" src="assets/img/<?= $student["gambar"] ?>" alt="">
-                <input type="file" class="form-control" name="gambar" id="exampleInputEmail1" aria-describedby="emailHelp">
-            </div>
+                    <button type="submit" name="submit" class="btn btn-primary w-100 mx-auto">Submit</button>
+                    <?php
+                    // cek tombol submit sudah ditekan atau belum
+                    if (isset($_POST["submit"])) {
 
-            <button type=" submit" name="submit" class="btn btn-primary w-25 mx-auto">Edit</button>
-        </form>
+                        // cek data berhasil ditambahkan atau gagal
+                        if (tambah($_POST) > 0) {
+                            echo "<script>
+                            Swal.fire({
+                                title: 'Data Berhasil di Tambahkan',
+                                icon: 'success',
+                                didClose: () => {
+                                    document.location.href = 'index.php';
+                                }
+                            });
+                            </script>";
+                        } else {
+                            echo "<script>
+                            Swal.fire({
+                                title: 'Data Gagal di Tambahkan',
+                                icon: 'error',
+                                didClose: () => {
+                                    document.location.href = 'index.php';
+                                }
+                            });
+                            </script>";
+                        }
+                    } ?>
+                </form>
+        </div>
     </div>
     <!-- Script -->
     <script src="assets/js/script.js"></script>

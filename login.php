@@ -36,8 +36,10 @@ if (isset($_POST["login"])) {
     $row = mysqli_fetch_assoc($result);
     if (password_verify($password, $row["password"])) {
       // set session
+      $profilePicture = $row["profile-picture"];
       $_SESSION["login"] = true;
       $_SESSION["username"] = $username;
+      $_SESSION["profile-picture"] = $profilePicture;
 
       // cek remember me
       if (isset($_POST['remember'])) {

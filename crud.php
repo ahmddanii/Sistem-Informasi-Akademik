@@ -43,6 +43,10 @@ if (isset($_POST["search"])) {
 
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -127,7 +131,7 @@ if (isset($_POST["search"])) {
                         <td>
                             <a href="edit.php?id=<?= $row["id"]; ?>" class="btn btn-primary btn-sm">Edit</a>
                             <span>|</span>
-                            <a href="hapus.php?id=<?= $row["id"]; ?>" class="btn btn-danger btn-sm" onclick="return confirm('You Want To Delete?') ">Delete</a>
+                            <button class="btn btn-danger btn-sm delete-btn" data-id="<?= $row['id']; ?>">Delete</button>
                         </td>
                         <td><?= $row["nim"]; ?></td>
                         <td><?= $row["nama"]; ?></td>
@@ -178,6 +182,64 @@ if (isset($_POST["search"])) {
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="assets/js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const deleteButtons = document.querySelectorAll(".delete-btn");
+
+            deleteButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const id = this.dataset.id;
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-success',
+                            cancelButton: 'btn btn-danger'
+                        },
+                    });
+
+                    swalWithBootstrapButtons.fire({
+                        title: 'Yakin ingin menghapus?',
+                        text: 'Data tidak dapat dikembalikan setelah dihapus',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya',
+                        cancelButtonText: 'Tidak'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch(`hapus.php?id=${id}`, {
+                                    method: 'GET'
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        Swal.fire(
+                                            'Dihapus!',
+                                            'Data berhasil dihapus',
+                                            'success'
+                                        ).then(() => {
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire(
+                                            'Error!',
+                                            'Ada error saat menghapus data',
+                                            'error'
+                                        );
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    Swal.fire(
+                                        'Error!',
+                                        'Ada error saat menghapus data',
+                                        'error'
+                                    );
+                                });
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
